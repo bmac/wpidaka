@@ -25,20 +25,32 @@ def findBreakfastItems(soup):
     items_text = [i.text for i in items]
     return items_text
 
+def findLunchItems(soup):
+    breakfast_table = soup.find(id=LUNCH_TABLE_ID)
+    items = breakfast_table.findAll('span', 'item-name')
+    items_text = [i.text for i in items]
+    return items_text
+
 def formatItemsMessage(items):
-    header = 'Daka is now serving '
+    header = 'Now serving: '
     elipsis = '...'
+    link = 'http://bit.ly/wpidaka'
+    max_size = 140 - len(header) + len(elipsis)
     items_listed = ', '.join(items)
-    if (len(items_listed) > 117):
-        truncated_items_listed = items_listed[0:117]
+    if (len(items_listed) > max_size):
+        truncated_items_listed = items_listed[0:max_size]
         truncated_items_listed = truncated_items_listed.rpartition(',')[0]
+        truncated_items_listed += elipsis
     else:
         truncated_items_listed = items_listed
-    return header + truncated_items_listed + elipsis
+    return header + truncated_items_listed
     
 
 if __name__=="__main__":    
     todaysDate = date.today().strftime('%m/%d/%y')
     menu_html = requestTodaysMenuHtml(todaysDate)
     breakfast_items = findBreakfastItems(BeautifulSoup(menu_html))
+    lunch_items = findLunchItems(BeautifulSoup(menu_html))
     print formatItemsMessage(breakfast_items)
+    print formatItemsMessage(lunch_items)
+    
