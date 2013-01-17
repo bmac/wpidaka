@@ -98,7 +98,7 @@ def post_msg_to_twitter(msg):
 
     api.PostUpdate(msg)    
 
-if __name__=="__main__":
+def main():
     options = get_command_line_options()
     if (not options.meal):
         print 'please supply a meal. Usage python wpidaka.py -m (breakfast|lunch|dinner_'
@@ -114,6 +114,17 @@ if __name__=="__main__":
         items = find_dinner_items(soup)
     
     msg = format_items_message(items)
+
     if options.verbose:
         print msg
+
+    if options.dry_run:
+        return
+
+    assert(len(msg) > 40) # sanity check 
     
+    post_msg_to_twitter(msg)
+
+
+if __name__=="__main__":
+    main()
