@@ -100,6 +100,9 @@ def post_msg_to_twitter(msg):
 
 if __name__=="__main__":
     options = get_command_line_options()
+    if (not options.meal):
+        print 'please supply a meal. Usage python wpidaka.py -m (breakfast|lunch|dinner_'
+        return 
     todays_date = date.today().strftime('%m/%d/%y')
     menu_html = request_todays_menu_html(todays_date)
     soup = BeautifulSoup(menu_html)
@@ -111,6 +114,6 @@ if __name__=="__main__":
         items = find_dinner_items(soup)
     
     msg = format_items_message(items)
-    
-    print msg
+    if options.verbose:
+        print msg
     
