@@ -53,21 +53,20 @@ def find_breakfast_items(soup):
     items_text = [i.text.strip() for i in items]
     return items_text
 
-def find_lunch_items(soup):
-    lunch_table = soup.find(id=LUNCH_TABLE_ID)
-    items = lunch_table.find_all('span', class_=['item-name', 'station-name'])
+def find_interesting_items(table_soup):
+    items = table_soup.find_all('span', class_=['item-name', 'station-name'])
     (dull, interesting_items) = partition(items, 
                                           lambda x: x.text.strip().lower() == 'kitchen')
     items_text = [span.text.strip() for span in interesting_items if 'item-name' in span.attrs['class'] ]
     return items_text
 
+def find_lunch_items(soup):
+    lunch_table = soup.find(id=LUNCH_TABLE_ID)
+    return find_interesting_items(lunch_table)
+
 def find_dinner_items(soup):
     dinner_table = soup.find(id=DINNER_TABLE_ID)
-    items = dinner_table.find_all('span', class_=['item-name', 'station-name'])
-    (dull, interesting_items) = partition(items, 
-                                          lambda x: x.text.strip().lower() == 'kitchen')
-    items_text = [span.text.strip() for span in interesting_items if 'item-name' in span.attrs['class'] ]
-    return items_text
+    return find_interesting_items(dinner_table)
 
 
 def format_items_message(items):
