@@ -21,6 +21,7 @@ def get_command_line_options():
 def request_todays_menu_html(date):
     payload = {'dt': date, 'venueName': 'Pulse On Dining Marketplace'}
     r = requests.get("http://www.dineoncampus.com/wpi/webtrition/webtrition.cfm", params=payload)
+    assert(r.status_code is 200) #sanity check
     return r.text
 
 
