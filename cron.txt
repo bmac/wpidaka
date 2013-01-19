@@ -1,4 +1,4 @@
 # minute hour dom month dow user cmd
-02 7 * * * wpidaka . ~/post_wpi_daka.sh breakfast $>> ~/wpidaka.log
-02 11 * * * wpidaka . ~/post_wpi_daka.sh lunch $>> ~/wpidaka.log
-02 17 * * * wpidaka . ~/post_wpi_daka.sh dinner $>> ~/wpidaka.log
+02 7 * * * wpidaka . ~/post_wpi_daka.sh breakfast &>> ~/wpidaka.log
+02 11 * * * wpidaka . ~/post_wpi_daka.sh lunch &>> ~/wpidaka.log
+02 17 * * * wpidaka . ~/post_wpi_daka.sh dinner &>> ~/wpidaka.log
