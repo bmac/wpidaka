@@ -1,6 +1,8 @@
+import os
 from datetime import date
 from optparse import OptionParser
 import requests
+import twitter
 from bs4 import BeautifulSoup
 
 def get_command_line_options():
