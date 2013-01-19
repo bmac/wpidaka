@@ -32,8 +32,8 @@ MENU_TABLE_CLASS = 'menu-content'
 BREAKFAST_TABLE_ID = 'menu-tbl-1'
 AFTERNOON_SNACK_TABLE_ID = 'menu-tbl-2'
 LUNCH_TABLE_ID = 'menu-tbl-3'
-DINNER_TABLE_ID = 'menu-tbl-4'
-LATE_NIGHT_TABLE_ID = 'menu-tbl-5'
+DINNER_TABLE_ID = 'menu-tbl-5'
+LATE_NIGHT_TABLE_ID = 'menu-tbl-4'
 
 # iterate through a list pushing everything before the conditional is found into 
 # the first partition. Then everything after the conditional is found into
