@@ -76,7 +76,7 @@ def format_items_message(items):
     header = 'Now serving: '
     elipsis = '...'
     link = 'http://bit.ly/wpidaka'
-    max_size = 140 - len(header) + len(elipsis)
+    max_size = 140 - len(header) + len(elipsis) - 2
     items_listed = ', '.join(items)
     if (len(items_listed) > max_size):
         truncated_items_listed = items_listed[0:max_size]
