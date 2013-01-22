@@ -63,6 +63,13 @@ def find_interesting_items(table_soup):
     items_text = [span.text.strip() for span in interesting_items if 'item-name' in span.attrs['class'] ]
     return items_text
 
+def grab_two_items(soup, section_header):
+    items = soup.find_all('span', class_=['item-name', 'station-name'])
+    (start, section_start) = partition(items,
+                                          lambda x: x.text.strip().lower() == section_header.lower())
+    items_text = [span.text.strip() for span in section_start if 'item-name' in span.attrs['class'] ]
+    return items_text[:2]
+
 def find_lunch_items(soup):
     lunch_table = soup.find(id=LUNCH_TABLE_ID)
     return find_interesting_items(lunch_table)
