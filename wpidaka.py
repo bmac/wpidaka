@@ -68,11 +68,11 @@ def find_breakfast_items(soup):
     return items_text
 
 def find_interesting_items(table_soup):
-    items = table_soup.find_all('span', class_=['item-name', 'station-name'])
-    (dull, interesting_items) = partition(items, 
-                                          lambda x: x.text.strip().lower() == 'kitchen')
-    items_text = [span.text.strip() for span in interesting_items if 'item-name' in span.attrs['class'] ]
-    return items_text
+    items = []
+    items.extend(grab_two_items(table_soup, 'kitchen'))
+    items.extend(grab_two_items(table_soup, 'kitchen grill'))
+    items.extend(grab_two_items(table_soup, 'scratch made soup offerings'))
+    return items
 
 def grab_two_items(soup, section_header):
     items = soup.find_all('span', class_=['item-name', 'station-name'])
@@ -83,19 +83,11 @@ def grab_two_items(soup, section_header):
 
 def find_lunch_items(soup):
     lunch_table = soup.find(id=LUNCH_TABLE_ID)
-    items = []
-    items.extend(grab_two_items(lunch_table, 'kitchen'))
-    items.extend(grab_two_items(lunch_table, 'kitchen grill'))
-    items.extend(grab_two_items(lunch_table, 'scratch made soup offerings'))
-    return items
+    return find_interesting_items(lunch_table)
 
 def find_dinner_items(soup):
     dinner_table = soup.find(id=find_dinner_id(soup))
-    items = []
-    items.extend(grab_two_items(dinner_table, 'kitchen'))
-    items.extend(grab_two_items(dinner_table, 'kitchen grill'))
-    items.extend(grab_two_items(dinner_table, 'scratch made soup offerings'))
-    return items
+    return find_interesting_items(dinner_table)
 
 
 def format_items_message(items):
