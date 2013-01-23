@@ -72,11 +72,19 @@ def grab_two_items(soup, section_header):
 
 def find_lunch_items(soup):
     lunch_table = soup.find(id=LUNCH_TABLE_ID)
-    return find_interesting_items(lunch_table)
+    items = []
+    items.extend(grab_two_items(lunch_table, 'kitchen'))
+    items.extend(grab_two_items(lunch_table, 'kitchen grill'))
+    items.extend(grab_two_items(lunch_table, 'scratch made soup offerings'))
+    return items
 
 def find_dinner_items(soup):
     dinner_table = soup.find(id=DINNER_TABLE_ID)
-    return find_interesting_items(dinner_table)
+    items = []
+    items.extend(grab_two_items(dinner_table, 'kitchen'))
+    items.extend(grab_two_items(dinner_table, 'kitchen grill'))
+    items.extend(grab_two_items(dinner_table, 'scratch made soup offerings'))
+    return items
 
 
 def format_items_message(items):
