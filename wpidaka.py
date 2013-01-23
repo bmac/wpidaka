@@ -1,4 +1,5 @@
 import os
+import re
 from datetime import date
 from optparse import OptionParser
 import requests
@@ -32,8 +33,18 @@ MENU_TABLE_CLASS = 'menu-content'
 BREAKFAST_TABLE_ID = 'menu-tbl-1'
 AFTERNOON_SNACK_TABLE_ID = 'menu-tbl-2'
 LUNCH_TABLE_ID = 'menu-tbl-3'
-DINNER_TABLE_ID = 'menu-tbl-5'
-LATE_NIGHT_TABLE_ID = 'menu-tbl-4'
+DINNER_TABLE_ID = 'menu-tbl-4'
+LATE_NIGHT_TABLE_ID = 'menu-tbl-5'
+
+# dinner and late night seem to swap between menu-tbl-4 and menu-tbl-5
+# this function helps us find the correct dinner id
+def find_dinner_id(soup):
+    nav_items = soup.find(id='mp-nav-wrapper').findAll(class_="mp-nav")
+    for item in nav_items:
+        if item.text.lower() == 'dinner':
+            number = re.search('(\d)', item['id']).group(0)
+            return 'menu-tbl-' + number
+
 
 # iterate through a list pushing everything before the conditional is found into 
 # the first partition. Then everything after the conditional is found into
@@ -79,7 +90,7 @@ def find_lunch_items(soup):
     return items
 
 def find_dinner_items(soup):
-    dinner_table = soup.find(id=DINNER_TABLE_ID)
+    dinner_table = soup.find(id=find_dinner_id(soup))
     items = []
     items.extend(grab_two_items(dinner_table, 'kitchen'))
     items.extend(grab_two_items(dinner_table, 'kitchen grill'))
