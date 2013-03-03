@@ -62,6 +62,8 @@ def partition(iterable, func):
     return (first_partition, second_partition)
 
 def find_breakfast_items(soup):
+    if soup.getText().lower().find('breakfast') is -1:
+        return []
     breakfast_table = soup.find(id=BREAKFAST_TABLE_ID)
     items = breakfast_table.find_all('span', 'item-name')
     items_text = [i.text.strip() for i in items]
